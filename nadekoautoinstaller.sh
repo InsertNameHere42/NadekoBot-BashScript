@@ -303,7 +303,31 @@ elif [ "$OS" = "Debian" ]; then
 		exit 1
 	fi
 elif [ "$OS" = "LinuxMint" ]; then
-	if [ "$SVER" = "18" ]; then
+	if [ "$SVER" = "19" ]; then
+		# Based on Ubuntu 18.04
+		echo ""
+		echo "Preparing..."
+		sudo apt-get update
+		sudo apt-get install software-properties-common apt-transport-https curl -y
+		wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg
+		sudo mv -f microsoft.asc.gpg /etc/apt/trusted.gpg.d/
+		wget -q https://packages.microsoft.com/config/ubuntu/18.04/prod.list 
+		sudo mv -f prod.list /etc/apt/sources.list.d/microsoft-prod.list
+		sudo chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+		sudo chown root:root /etc/apt/sources.list.d/microsoft-prod.list
+		sudo apt-get update
+		sudo apt-get upgrade -y
+		sudo apt-get dist-upgrade -y
+		echo "Installing Git..."
+		sudo apt-get install git -y
+		echo "Installing .NET Core..."
+		sudo apt-get install dotnet-sdk-2.1 -y
+		echo "Installing prerequisites..."
+		sudo apt-get install libopus0 opus-tools libopus-dev libsodium-dev ffmpeg tmux python python3-pip redis-server -y
+		sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
+		sudo chmod a+rx /usr/local/bin/youtube-dl
+		fi
+	elif [ "$SVER" = "18" ]; then
 		# Based on Ubuntu 16.04
 		echo ""
 		echo "Preparing..."
