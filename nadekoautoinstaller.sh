@@ -82,7 +82,9 @@ fi
 
 if [ "$OS" = "LinuxMint" ]; then
 	SVER=$( echo $VER | grep -oP "[0-9]+" | head -1 )
-	if [ "$SVER" = "18" ]; then
+	if [ "$SVER" = "19" ]; then
+		supported=1
+	elif [ "$SVER" = "18" ]; then
 		supported=1
 	elif [ "$SVER" = "17" ]; then
 		supported=1
