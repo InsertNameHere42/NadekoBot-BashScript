@@ -303,7 +303,29 @@ elif [ "$OS" = "Debian" ]; then
 		exit 1
 	fi
 elif [ "$OS" = "LinuxMint" ]; then
-	if [ "$SVER" = "18" ]; then
+	if [ "$SVER" = "19" ]; then
+		# Based on Ubuntu 18.04
+		echo ""
+		echo "Preparing..."
+		sudo apt-get update
+		sudo apt-get install software-properties-common apt-transport-https curl -y
+		wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+		sudo dpkg -i packages-microsoft-prod.deb
+		sudo add-apt-repository ppa:jonathonf/ffmpeg-3 -y
+		sudo apt-get update
+		sudo apt-get upgrade -y
+		sudo apt-get dist-upgrade -y
+		echo "Installing Git..."
+		sudo apt-get install git -y
+		echo "Installing .NET Core..."
+		sudo apt-get install dotnet-sdk-2.1 -y
+		echo "Installing prerequisites..."
+		sudo apt-get install libopus0 opus-tools libopus-dev libsodium-dev ffmpeg tmux python python3-pip redis-server -y
+		sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
+		sudo chmod a+rx /usr/local/bin/youtube-dl
+		# remove dotnet temp
+		sudo rm -f packages-microsoft-prod.deb
+	elif [ "$SVER" = "18" ]; then
 		# Based on Ubuntu 16.04
 		echo ""
 		echo "Preparing..."
